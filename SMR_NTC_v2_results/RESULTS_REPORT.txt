@@ -1,0 +1,71 @@
+======================================================================
+SMR_NTC_border v2 — RESULTS (corrected node placement)
+======================================================================
+
+Nuclear placed at cable endpoint nodes:
+  NO1_5: 1,800 MW (SE3 cables)
+  NO2_1: 1,500 MW (North Sea Link)
+  NO2_4: 2,100 MW (NorNed + NordLink)
+  NO2_5: 1,500 MW (Skagerrak)
+  NO3_1:   900 MW (SE2_4 cable)
+  NO4_1: 1,200 MW (SE1_1 + FI_1)
+  NO4_3:   300 MW (SE2_1)
+  TOTAL: 9,300 MW (31 units)
+
+======================================================================
+MD DEMAND (208 TWh)
+======================================================================
+
+Zone Prices [EUR/MWh]:
+  Zone     Baseline    SMR_NTC     Change
+  NO1         222.7      103.8       -53%
+  NO2          71.8       24.5       -66%
+  NO3         105.0       40.0       -62%
+  NO4          28.4       13.6       -52%
+  NO5          80.9       36.1       -55%
+  Avg         101.7       43.6       -57%
+
+Nuclear: CF=68.3%, prod=55.7 TWh/yr
+Net export: BL=+1.1, NTC=+42.5 TWh/yr
+
+Cable Saturation:
+  Interconnector          NTC     BL    NTC     Diff
+  NorNed                  700  54.4%  77.1%   +22.7pp
+  Skagerrak              1632  53.3%  90.8%   +37.4pp
+  North Sea Link         1400  85.3%  97.4%   +12.2pp
+  NordLink               1400  34.1%  87.4%   +53.3pp
+  NO1-SE3_5               911   0.3%   0.9%    +0.6pp
+  NO1-SE3_7               911   7.1%  68.0%   +60.9pp
+  NO3-SE2_4              1000   0.5%   7.2%    +6.7pp
+  NO4-SE1_1               900   0.3%   5.8%    +5.6pp
+  NO4-SE2_1               400   0.0%   0.0%    +0.0pp
+  NO4-FI_1                 84  78.8%  94.2%   +15.4pp
+
+======================================================================
+IC DEMAND (230 TWh)
+======================================================================
+
+Zone Prices [EUR/MWh]:
+  Zone     Baseline    SMR_NTC     Change
+  NO1         332.4      142.8       -57%
+  NO2          77.6       26.6       -66%
+  NO3         227.2       66.7       -71%
+  NO4         102.2       17.1       -83%
+  NO5         170.7       64.1       -62%
+  Avg         182.0       63.5       -65%
+
+Nuclear: CF=76.5%, prod=62.4 TWh/yr
+Net export: BL=-15.9, NTC=+35.6 TWh/yr
+
+Cable Saturation:
+  Interconnector          NTC     BL    NTC     Diff
+  NorNed                  700  50.1%  75.4%   +25.2pp
+  Skagerrak              1632  41.8%  88.1%   +46.3pp
+  North Sea Link         1400  79.8%  96.5%   +16.8pp
+  NordLink               1400  32.6%  84.4%   +51.8pp
+  NO1-SE3_5               911   0.5%   0.9%    +0.4pp
+  NO1-SE3_7               911   4.9%  53.3%   +48.4pp
+  NO3-SE2_4              1000   0.0%   2.0%    +2.0pp
+  NO4-SE1_1               900   0.0%   3.5%    +3.5pp
+  NO4-SE2_1               400   0.0%   0.0%    +0.0pp
+  NO4-FI_1                 84  45.3%  89.1%   +43.8pp

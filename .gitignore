@@ -1,0 +1,12 @@
+.DS_Store
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.log
+.idea/
+.vscode/
+*.sqlite
+*.sqlite3
+*.db
+timeseries_profiles.csv

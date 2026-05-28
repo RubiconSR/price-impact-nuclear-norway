@@ -1,0 +1,352 @@
+{
+  "BL_MD": {
+    "demand_twh": 208,
+    "nuclear_mw": 0,
+    "zone_prices": {
+      "NO1": 222.74,
+      "NO2": 71.75,
+      "NO3": 104.99,
+      "NO4": 28.36,
+      "NO5": 80.86
+    },
+    "national_avg_price": 101.74,
+    "gen_mix": {
+      "biomass": 1.42,
+      "fossil_gas": 0.25,
+      "hydro": 130.13,
+      "ror": 36.6,
+      "solar": 7.66,
+      "wind_off": 13.69,
+      "wind_on": 19.31
+    },
+    "total_gen_twh_yr": 209.05,
+    "net_export_twh_yr": 1.05,
+    "nuclear_cf": null,
+    "nuclear_prod_twh_yr": 0,
+    "cable_saturation": {
+      "NorNed": {
+        "capacity_mw": 700,
+        "zone": "NO2",
+        "saturation_pct": 54.38,
+        "avg_export_mw": 174.3
+      },
+      "Skagerrak": {
+        "capacity_mw": 1632,
+        "zone": "NO2",
+        "saturation_pct": 53.33,
+        "avg_export_mw": 519.3
+      },
+      "North Sea Link": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 85.28,
+        "avg_export_mw": 1159.4
+      },
+      "NordLink": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 34.12,
+        "avg_export_mw": 9.4
+      },
+      "NO1-SE3_5": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 0.31,
+        "avg_export_mw": -310.2
+      },
+      "NO1-SE3_7": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 7.14,
+        "avg_export_mw": 56.4
+      },
+      "NO3-SE2_4": {
+        "capacity_mw": 1000,
+        "zone": "NO3",
+        "saturation_pct": 0.5,
+        "avg_export_mw": -555.5
+      },
+      "NO4-SE1_1": {
+        "capacity_mw": 900,
+        "zone": "NO4",
+        "saturation_pct": 0.27,
+        "avg_export_mw": -717.8
+      },
+      "NO4-SE2_1": {
+        "capacity_mw": 400,
+        "zone": "NO4",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -113.8
+      },
+      "NO4-FI_1": {
+        "capacity_mw": 84,
+        "zone": "NO4",
+        "saturation_pct": 78.85,
+        "avg_export_mw": 53.2
+      }
+    }
+  },
+  "SMR_NTC_MD": {
+    "demand_twh": 208,
+    "nuclear_mw": 9300,
+    "zone_prices": {
+      "NO1": 103.82,
+      "NO2": 24.47,
+      "NO3": 39.97,
+      "NO4": 13.55,
+      "NO5": 36.13
+    },
+    "national_avg_price": 43.59,
+    "gen_mix": {
+      "biomass": 0.9,
+      "fossil_gas": 0.05,
+      "hydro": 120.5,
+      "nuclear": 55.67,
+      "ror": 35.54,
+      "solar": 7.1,
+      "wind_off": 12.3,
+      "wind_on": 18.4
+    },
+    "total_gen_twh_yr": 250.45,
+    "net_export_twh_yr": 42.45,
+    "nuclear_cf": 0.6829,
+    "nuclear_prod_twh_yr": 55.67,
+    "cable_saturation": {
+      "NorNed": {
+        "capacity_mw": 700,
+        "zone": "NO2",
+        "saturation_pct": 77.1,
+        "avg_export_mw": 422.4
+      },
+      "Skagerrak": {
+        "capacity_mw": 1632,
+        "zone": "NO2",
+        "saturation_pct": 90.75,
+        "avg_export_mw": 1496.7
+      },
+      "North Sea Link": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 97.43,
+        "avg_export_mw": 1364.8
+      },
+      "NordLink": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 87.44,
+        "avg_export_mw": 1201.8
+      },
+      "NO1-SE3_5": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 0.89,
+        "avg_export_mw": 187.5
+      },
+      "NO1-SE3_7": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 68.03,
+        "avg_export_mw": 693.0
+      },
+      "NO3-SE2_4": {
+        "capacity_mw": 1000,
+        "zone": "NO3",
+        "saturation_pct": 7.16,
+        "avg_export_mw": -85.9
+      },
+      "NO4-SE1_1": {
+        "capacity_mw": 900,
+        "zone": "NO4",
+        "saturation_pct": 5.85,
+        "avg_export_mw": -474.2
+      },
+      "NO4-SE2_1": {
+        "capacity_mw": 400,
+        "zone": "NO4",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -36.1
+      },
+      "NO4-FI_1": {
+        "capacity_mw": 84,
+        "zone": "NO4",
+        "saturation_pct": 94.25,
+        "avg_export_mw": 76.3
+      }
+    }
+  },
+  "BL_IC": {
+    "demand_twh": 230,
+    "nuclear_mw": 0,
+    "zone_prices": {
+      "NO1": 332.44,
+      "NO2": 77.64,
+      "NO3": 227.18,
+      "NO4": 102.23,
+      "NO5": 170.65
+    },
+    "national_avg_price": 182.03,
+    "gen_mix": {
+      "biomass": 1.85,
+      "fossil_gas": 0.66,
+      "hydro": 132.04,
+      "ror": 37.81,
+      "solar": 7.98,
+      "wind_off": 14.19,
+      "wind_on": 19.55
+    },
+    "total_gen_twh_yr": 214.07,
+    "net_export_twh_yr": -15.93,
+    "nuclear_cf": null,
+    "nuclear_prod_twh_yr": 0,
+    "cable_saturation": {
+      "NorNed": {
+        "capacity_mw": 700,
+        "zone": "NO2",
+        "saturation_pct": 50.13,
+        "avg_export_mw": 112.5
+      },
+      "Skagerrak": {
+        "capacity_mw": 1632,
+        "zone": "NO2",
+        "saturation_pct": 41.79,
+        "avg_export_mw": 173.1
+      },
+      "North Sea Link": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 79.77,
+        "avg_export_mw": 1006.8
+      },
+      "NordLink": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 32.6,
+        "avg_export_mw": -120.7
+      },
+      "NO1-SE3_5": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 0.47,
+        "avg_export_mw": -359.4
+      },
+      "NO1-SE3_7": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 4.94,
+        "avg_export_mw": -57.8
+      },
+      "NO3-SE2_4": {
+        "capacity_mw": 1000,
+        "zone": "NO3",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -832.0
+      },
+      "NO4-SE1_1": {
+        "capacity_mw": 900,
+        "zone": "NO4",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -888.4
+      },
+      "NO4-SE2_1": {
+        "capacity_mw": 400,
+        "zone": "NO4",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -150.8
+      },
+      "NO4-FI_1": {
+        "capacity_mw": 84,
+        "zone": "NO4",
+        "saturation_pct": 45.32,
+        "avg_export_mw": -4.1
+      }
+    }
+  },
+  "SMR_NTC_IC": {
+    "demand_twh": 230,
+    "nuclear_mw": 9300,
+    "zone_prices": {
+      "NO1": 142.83,
+      "NO2": 26.64,
+      "NO3": 66.66,
+      "NO4": 17.15,
+      "NO5": 64.08
+    },
+    "national_avg_price": 63.47,
+    "gen_mix": {
+      "biomass": 1.09,
+      "fossil_gas": 0.16,
+      "hydro": 125.4,
+      "nuclear": 62.41,
+      "ror": 37.2,
+      "solar": 7.58,
+      "wind_off": 12.96,
+      "wind_on": 18.84
+    },
+    "total_gen_twh_yr": 265.64,
+    "net_export_twh_yr": 35.64,
+    "nuclear_cf": 0.7655,
+    "nuclear_prod_twh_yr": 62.41,
+    "cable_saturation": {
+      "NorNed": {
+        "capacity_mw": 700,
+        "zone": "NO2",
+        "saturation_pct": 75.36,
+        "avg_export_mw": 403.6
+      },
+      "Skagerrak": {
+        "capacity_mw": 1632,
+        "zone": "NO2",
+        "saturation_pct": 88.11,
+        "avg_export_mw": 1437.9
+      },
+      "North Sea Link": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 96.53,
+        "avg_export_mw": 1351.3
+      },
+      "NordLink": {
+        "capacity_mw": 1400,
+        "zone": "NO2",
+        "saturation_pct": 84.36,
+        "avg_export_mw": 1147.3
+      },
+      "NO1-SE3_5": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 0.87,
+        "avg_export_mw": 79.2
+      },
+      "NO1-SE3_7": {
+        "capacity_mw": 911,
+        "zone": "NO1",
+        "saturation_pct": 53.3,
+        "avg_export_mw": 555.0
+      },
+      "NO3-SE2_4": {
+        "capacity_mw": 1000,
+        "zone": "NO3",
+        "saturation_pct": 1.96,
+        "avg_export_mw": -315.3
+      },
+      "NO4-SE1_1": {
+        "capacity_mw": 900,
+        "zone": "NO4",
+        "saturation_pct": 3.52,
+        "avg_export_mw": -539.3
+      },
+      "NO4-SE2_1": {
+        "capacity_mw": 400,
+        "zone": "NO4",
+        "saturation_pct": 0.0,
+        "avg_export_mw": -66.1
+      },
+      "NO4-FI_1": {
+        "capacity_mw": 84,
+        "zone": "NO4",
+        "saturation_pct": 89.14,
+        "avg_export_mw": 68.7
+      }
+    }
+  }
+}
