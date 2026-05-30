@@ -1,0 +1,93 @@
+
+=== 1. NO2_1-noden og dens brancher (fra CSV) ===
+   id zone       lat      lon
+NO2_1  NO2 59.546019 7.590592
+
+AC-brancher fra NO2_1:
+node_from node_to    capacity
+    NO2_1   NO1_4  620.280528
+    NO2_1   NO1_3  367.299161
+    NO2_1   NO2_5 1698.102612
+    NO2_1   NO2_3 3709.013599
+    NO2_1   NO2_2 1698.102612
+    NO2_1   NO5_2  101.798395
+AC-brancher til NO2_1:
+  (ingen)
+DC-brancher fra NO2_1:
+node_from node_to  capacity
+    NO2_1      GB      1400
+DC-brancher til NO2_1:
+  (ingen)
+
+=== 2. AC-brancheflyt for NO2_1 (snitt MW, +ve = ut av NO2_1) ===
+  line       to/from         cap         N0_OW0         N0_OW1         N0_OW2         N1_OW0    N1jevnt_OW0
+  AC         NO1_3           367          +48.0          +97.1         +135.7         +133.9          +23.2
+  AC         NO1_4           620         +351.9         +409.4         +455.3         +454.1         +356.1
+  AC         NO2_2          1698         +215.7         +297.8         +328.5         +327.8         +278.3
+  AC         NO2_3          3709         +953.4        +1117.0        +1233.9        +1230.0        +1003.4
+  AC         NO2_5          1698         +299.3         +476.0         +567.0         +560.7         +347.1
+  AC         NO5_2           102          +53.2          +82.9          +95.0          +94.7          +71.1
+
+=== 2b. DC-flyt for NO2_1 (snitt MW, +ve = ut av NO2_1) ===
+             to/from         cap         N0_OW0         N0_OW1         N0_OW2         N1_OW0    N1jevnt_OW0
+  DC         GB             1400         +893.6        +1160.3        +1298.6        +1307.8        +1020.5
+
+=== 3. Norsk produksjon per sone × type (TWh/år snitt over 30 år) ===
+
+--- N0_OW0 ---
+type    hydro    ror  wind_on  wind_off  solar  nuclear     SUM
+zone                                                           
+NO1      9.17  15.12     0.67       0.0   1.26      0.0   26.22
+NO2     51.86   7.61     7.23       0.0   0.96      0.0   67.66
+NO3     15.13   6.52     8.09       0.0   3.85      0.0   33.60
+NO4     24.36   3.66     3.03       0.0   0.00      0.0   31.05
+NO5     28.97   3.65     0.36       0.0   1.58      0.0   34.56
+NORGE  129.49  36.56    19.39       0.0   7.65      0.0  193.08
+
+--- N0_OW1 ---
+type    hydro    ror  wind_on  wind_off  solar  nuclear     SUM
+zone                                                           
+NO1      9.15  14.99     0.67      0.00   1.25      0.0   26.06
+NO2     51.62   7.61     7.11      7.64   0.93      0.0   74.91
+NO3     15.13   6.52     8.09      0.00   3.85      0.0   33.59
+NO4     24.39   3.66     3.04      0.00   0.00      0.0   31.08
+NO5     29.37   3.66     0.36      0.00   1.59      0.0   34.98
+NORGE  129.65  36.44    19.26      7.64   7.62      0.0  200.62
+
+--- N0_OW2 ---
+type    hydro    ror  wind_on  wind_off  solar  nuclear     SUM
+zone                                                           
+NO1      9.12  14.71     0.65      0.00   1.22      0.0   25.71
+NO2     49.94   7.61     6.79     13.93   0.82      0.0   79.09
+NO3     15.12   6.52     8.09      0.00   3.85      0.0   33.58
+NO4     24.45   3.66     3.04      0.00   0.00      0.0   31.15
+NO5     29.77   3.66     0.37      0.00   1.63      0.0   35.43
+NORGE  128.40  36.17    18.95     13.93   7.52      0.0  204.96
+
+--- N1_OW0 ---
+type    hydro    ror  wind_on  wind_off  solar  nuclear     SUM
+zone                                                           
+NO1      9.12  14.78     0.66       0.0   1.22     0.00   25.78
+NO2     49.93   7.61     6.90       0.0   0.82    13.79   79.05
+NO3     15.12   6.52     8.09       0.0   3.85     0.00   33.59
+NO4     24.46   3.66     3.04       0.0   0.00     0.00   31.16
+NO5     29.75   3.66     0.37       0.0   1.64     0.00   35.41
+NORGE  128.38  36.23    19.06       0.0   7.53    13.79  204.99
+
+--- N1jevnt_OW0 ---
+type    hydro    ror  wind_on  wind_off  solar  nuclear     SUM
+zone                                                           
+NO1      9.01  14.27     0.64       0.0   1.18     3.32   28.42
+NO2     51.84   7.61     7.23       0.0   0.96     2.52   70.16
+NO3     15.04   6.51     8.03       0.0   3.80     3.53   36.91
+NO4     23.22   3.53     2.96       0.0   0.00     1.66   31.37
+NO5     27.97   3.65     0.35       0.0   1.47     1.79   35.24
+NORGE  127.08  35.58    19.21       0.0   7.41    12.82  202.10
+
+=== 4. Norsk nettoeksport via alle grenser (TWh/år) ===
+  6 AC-kryssgrener, 4 DC-kryssgrener
+  N0_OW0         AC -10.92  DC +10.83  TOTAL  -0.09 TWh/år
+  N0_OW1         AC  -9.45  DC +16.93  TOTAL  +7.48 TWh/år
+  N0_OW2         AC  -7.87  DC +19.73  TOTAL +11.86 TWh/år
+  N1_OW0         AC  -7.83  DC +19.70  TOTAL +11.87 TWh/år
+  N1jevnt_OW0    AC  -5.62  DC +13.79  TOTAL  +8.17 TWh/år

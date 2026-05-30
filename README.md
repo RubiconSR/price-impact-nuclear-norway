@@ -6,72 +6,72 @@ Author: SR
 
 ## Overview
 
-This repository contains all the source code and scripts used to produce the
-results in the master's thesis. The analysis uses PowerGAMA (sequential optimal
-power flow) on the Nordic power system with 30 years of historical weather data
-(1991–2020).
-
-The work is divided into two phases:
-
-### Phase 1 — IEEE conference paper (submitted)
-2050 system analysis with 8 SMR deployment scenarios under moderate and high
-demand growth. Files: `run_nuclear_MD.py`, `run_nuclear_IC.py`,
-`run_nuclear_NTC.py`, `setup_nuclear_MD.py`, `plot_nuclear_*.py`, `IEEE/`.
-
-### Phase 2 — Master extensions (this thesis)
-- 2040 benchmark against the Volt/BCG offshore wind report
-- Direct nuclear vs. offshore wind comparison in the same modelling framework
-- Placement sensitivity analysis (uniform vs. concentrated SMR deployment)
-
-Files: `master_volt_benchmark/`
+This repository contains the source code, input data, and figures from the
+master's thesis. The analysis uses PowerGAMA (sequential optimal power flow)
+on the Nordic power system with 30 years of historical weather data
+(1991–2020), and is organised into four self-contained studies.
 
 ## Repository structure
 
 ```
 .
-├── IEEE/                       # Paper LaTeX and figures
-├── scenarios/                  # Phase 1 input data (CSV)
-│   ├── baseline/data/system/
-│   ├── nuclear_MD/data/system/  # 2050 Moderate Demand inputs
-│   └── nuclear_IC/data/system/  # 2050 High Demand inputs
-├── master_volt_benchmark/      # Phase 2 (master extensions)
-│   ├── scripts/                # All Volt benchmark scripts
-│   ├── docs/                   # Methodology notes, scenario matrix
-│   ├── plots/                  # Generated figures
-│   └── README.md               # Phase 2 documentation
-├── SMR_NTC_v2_results/         # SMR_NTC border placement results
-├── run_*.py                    # Simulation entry points
-├── plot_*.py                   # Plot generation scripts
-└── setup_nuclear_MD.py         # Phase 1 system construction
+├── studies/                        # Four thematic studies
+│   ├── 1_calibration/              # R0–R6 baseline calibration vs 2024 prices
+│   ├── 2_uniform_smr_2050/         # Paper main: BL/SMR1/3/6 × MD/IC
+│   ├── 3_ntc_border_2050/          # Paper extension: SMRs at cable endpoints
+│   └── 4_volt_benchmark_2040/      # Master: Volt benchmark + OW vs SMR
+│
+├── scenarios/                      # Input data + results (SQLite gitignored)
+│   ├── baseline/data/              # Calibration inputs
+│   ├── nuclear_MD/data/            # 2050 Moderate Demand inputs
+│   └── nuclear_IC/data/            # 2050 Increased Consumption inputs
+│
+├── IEEE/                           # Paper LaTeX + figures
+├── SMR_NTC_v2_results/             # Plots from Study 3
+├── README.md                       # This file
+├── CLAUDE.md                       # Project notes
+└── .gitignore                      # Excludes SQLite, venv, large profiles
 ```
 
-## Reproducing results
+## The four studies
 
-### Requirements
+| # | Study | Purpose | Year |
+|---|-------|---------|------|
+| 1 | Calibration | Iteratively tune `storage_price` to match observed 2024 zonal prices. Output: R6 calibration used in all subsequent studies | — |
+| 2 | Uniform SMR 2050 | 8 main paper scenarios: 0/1.5/4.5/9 GW SMR × MD/IC demand, SMRs uniformly distributed NO1–NO5 | 2050 |
+| 3 | NTC border placement | Same 9.3 GW SMR concentrated at cable-endpoint nodes (NSL, NordLink, NorNed, Skagerrak, SE-cables). Tests export-cable interaction | 2050 |
+| 4 | Volt benchmark 2040 | Replicate Volt/BCG offshore-wind scenarios (S0/S1/S2) in PowerGAMA + parallel nuclear scenarios. Direct OW vs SMR comparison at same node | 2040 |
+
+Each study has its own `README.md` with detailed methodology and results.
+
+## How to run
+
+Each study's scripts assume the project root is **three levels up** from the
+script:
+```python
+BASE_DIR = pathlib.Path(__file__).parent.parent.parent
+```
+
+So invoke scripts from anywhere:
+```bash
+python studies/1_calibration/run_baseline.py
+python studies/2_uniform_smr_2050/run_nuclear_MD.py
+python studies/3_ntc_border_2050/run_nuclear_NTC.py
+python studies/4_volt_benchmark_2040/scripts/run_volt_benchmark.py N0 OW1
+```
+
+## Requirements
+
 - Python 3.12
-- PowerGAMA 1.5.1 (with the modifications from
-  [NordicNuclearAnalysis](https://github.com/Zynecut/NordicNuclearAnalysis)
-  applied to `venv/lib/python3.12/site-packages/powergama/`)
+- PowerGAMA 1.5.1 with the modifications from
+  [Zynecut/NordicNuclearAnalysis](https://github.com/Zynecut/NordicNuclearAnalysis)
+  copied into `venv/lib/python3.12/site-packages/powergama/`
 - HiGHS or GLPK solver
-- Time series profile data (1991–2020 hourly): not included due to size
-  (~144 MB), available from NordicNuclearAnalysis
+- Time-series profile data (1991–2020 hourly, ~144 MB): not in repo, fetch from
+  NordicNuclearAnalysis upstream
 
-### Phase 1 example
-```bash
-python setup_nuclear_MD.py
-python run_nuclear_MD.py
-python plot_nuclear_MD.py
-```
-
-### Phase 2 example
-```bash
-python master_volt_benchmark/scripts/run_volt_benchmark.py N0 OW0
-python master_volt_benchmark/scripts/extract_zone_prices.py
-python master_volt_benchmark/scripts/plot_volt_comparison.py
-```
-
-Each simulation takes ~3 hours on a single core for the 30-year horizon
-(262,968 hourly time steps).
+Each 30-year simulation takes ~3 hours on a single CPU core. The
+full study set required ~75 hours of compute across 25 scenarios.
 
 ## Key references
 
@@ -84,10 +84,9 @@ Each simulation takes ~3 hours on a single core for the 30-year horizon
 
 ## Notes
 
-- Results databases (`*.sqlite`) are generated locally and excluded from this
-  repository due to size (114 GB total across all scenarios).
-- Reservoir-based water values are calibrated to observed 2024 zonal prices
-  through three iterations (R3 used in Phase 1, R6 in Phase 2).
-- Modified PowerGAMA source files are in the upstream
-  [NordicNuclearAnalysis](https://github.com/Zynecut/NordicNuclearAnalysis) repo
+- SQLite results are generated locally and excluded from the repo (114 GB total).
+- Calibration: R6 storage_price values per zone are persisted in
+  `scenarios/baseline/data/system/generator.csv` and inherited by all studies.
+- Modified PowerGAMA source files: upstream
+  [NordicNuclearAnalysis](https://github.com/Zynecut/NordicNuclearAnalysis)
   under `sourceCodeUpdates/`.
