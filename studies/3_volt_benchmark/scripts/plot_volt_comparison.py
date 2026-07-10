@@ -14,7 +14,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent.parent
-PLOTS_DIR = BASE_DIR / 'studies' / '4_volt_benchmark_2040' / 'plots'
+PLOTS_DIR = BASE_DIR / 'studies' / '3_volt_benchmark' / 'plots'
+OVERLEAF_DIR = BASE_DIR / 'overleaf' / 'pictures' / 'results'
+
+# larger fonts throughout for on-page readability
+plt.rcParams.update({
+    'font.size': 12, 'axes.titlesize': 14, 'axes.labelsize': 13,
+    'xtick.labelsize': 12, 'ytick.labelsize': 12, 'legend.fontsize': 11,
+})
+
+
+def save_both(fig_or_plt, stem):
+    for d in (PLOTS_DIR, OVERLEAF_DIR):
+        d.mkdir(parents=True, exist_ok=True)
+        fig_or_plt.savefig(d / stem, dpi=150, bbox_inches='tight')
 
 ZONES = ['NO1', 'NO2', 'NO3', 'NO4', 'NO5']
 NOK_PER_EUR = 11.4  # samme som NVE LA2025 og BCG bruker
@@ -73,7 +86,7 @@ def plot_delta_prices():
         'V2': '4 GW OW @ NO2 (S2)',
         'N1': '2.1 GW SMR @ NO2',
         'N2': '3.9 GW SMR @ NO2',
-        'N1jevnt': '2.1 GW SMR (jevnt)',
+        'N1jevnt': '2.1 GW SMR (uniform)',
     }
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 5), sharey=True)
@@ -91,10 +104,10 @@ def plot_delta_prices():
                width, label=labels_ours[s], color=colors[i])
     ax.set_xticks(x)
     ax.set_xticklabels(ZONES)
-    ax.set_ylabel('Endring i kraftpris [EUR/MWh]')
-    ax.set_title('PowerGAMA — endring vs V0 baseline')
+    ax.set_ylabel('Price change [EUR/MWh]')
+    ax.set_title('PowerGAMA — change vs V0 baseline')
     ax.axhline(0, color='black', linewidth=0.6)
-    ax.legend(fontsize=8, loc='lower right')
+    ax.legend(fontsize=11, loc='lower right')
     ax.grid(axis='y', alpha=0.3)
 
     # Høyre: Volts originaltall (S1 og S2) + våre V1 og V2 for direkte sammenligning
@@ -117,18 +130,17 @@ def plot_delta_prices():
                width, label=lbl, color=color)
     ax.set_xticks(x)
     ax.set_xticklabels(ZONES)
-    ax.set_title('Direkte sammenligning: PowerGAMA vs Volt (havvind)')
+    ax.set_title('Direct comparison: PowerGAMA vs Volt (offshore wind)')
     ax.axhline(0, color='black', linewidth=0.6)
-    ax.legend(fontsize=8, loc='lower right')
+    ax.legend(fontsize=11, loc='lower right')
     ax.grid(axis='y', alpha=0.3)
 
-    fig.suptitle('Figur 1: Endring i kraftpris per prisområde (Δ EUR/MWh vs V0)',
-                 y=1.02, fontsize=12, fontweight='bold')
+    fig.suptitle('Price change per bidding zone ($\\Delta$ EUR/MWh vs V0)',
+                 y=1.02, fontsize=16, fontweight='bold')
     plt.tight_layout()
-    out = PLOTS_DIR / 'fig1_delta_prices.png'
-    plt.savefig(out, dpi=150, bbox_inches='tight')
+    save_both(plt, 'fig1_delta_prices.png')
     plt.close()
-    print(f'Skrev {out.relative_to(BASE_DIR)}')
+    print('Skrev fig1_delta_prices.png (plots/ + overleaf)')
 
 
 # ============================================================
@@ -141,7 +153,7 @@ def plot_savings():
         'V2': '4 GW OW @ NO2 (S2)',
         'N1': '2.1 GW SMR @ NO2',
         'N2': '3.9 GW SMR @ NO2',
-        'N1jevnt': '2.1 GW SMR (jevnt)',
+        'N1jevnt': '2.1 GW SMR (uniform)',
     }
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 5), sharey=True)
@@ -163,11 +175,11 @@ def plot_savings():
                color=colors[i])
     ax.set_xticks(x)
     ax.set_xticklabels(ZONES)
-    ax.set_ylabel('Besparelse [mrd NOK/år]')
-    ax.set_title('PowerGAMA — direkte besparelse i forbrukerkostnad')
+    ax.set_ylabel('Saving [billion NOK/yr]')
+    ax.set_title('PowerGAMA — consumer-cost saving')
     ax.axhline(0, color='black', linewidth=0.6)
-    ax.legend(fontsize=8, loc='upper right',
-              title='Total NO (mrd NOK/år)')
+    ax.legend(fontsize=11, loc='upper right',
+              title='Total NO (billion NOK/yr)')
     ax.grid(axis='y', alpha=0.3)
 
     # Høyre: våre V1/V2 vs Volts
@@ -175,9 +187,9 @@ def plot_savings():
     width = 0.8 / 4
     pairs = [
         ('V1', '#377eb8', 'PowerGAMA 2 GW OW'),
-        ('Volt S1', '#9ecae1', 'Volt S1 (12.5 mrd)'),
+        ('Volt S1', '#9ecae1', 'Volt S1 (12.5 bn)'),
         ('V2', '#e7298a', 'PowerGAMA 4 GW OW'),
-        ('Volt S2', '#fbb4d5', 'Volt S2 (23.4 mrd)'),
+        ('Volt S2', '#fbb4d5', 'Volt S2 (23.4 bn)'),
     ]
     volt_savings_per_zone = {
         'Volt S1': {'NO1': 3.0, 'NO2': 4.1, 'NO3': 2.6, 'NO4': 1.2, 'NO5': 1.6},
@@ -194,19 +206,18 @@ def plot_savings():
                width, label=lbl, color=color)
     ax.set_xticks(x)
     ax.set_xticklabels(ZONES)
-    ax.set_title('Direkte sammenligning: PowerGAMA vs Volt (havvind)')
+    ax.set_title('Direct comparison: PowerGAMA vs Volt (offshore wind)')
     ax.axhline(0, color='black', linewidth=0.6)
-    ax.legend(fontsize=8, loc='upper right')
+    ax.legend(fontsize=11, loc='upper right')
     ax.grid(axis='y', alpha=0.3)
 
-    fig.suptitle(f'Figur 2: Direkte besparelse i forbrukerkostnad 2040 '
-                 f'(mrd NOK/år, {NOK_PER_EUR} NOK/EUR)',
-                 y=1.02, fontsize=12, fontweight='bold')
+    fig.suptitle(f'Consumer-cost saving 2040 '
+                 f'(billion NOK/yr, {NOK_PER_EUR} NOK/EUR)',
+                 y=1.02, fontsize=16, fontweight='bold')
     plt.tight_layout()
-    out = PLOTS_DIR / 'fig2_savings.png'
-    plt.savefig(out, dpi=150, bbox_inches='tight')
+    save_both(plt, 'fig2_savings.png')
     plt.close()
-    print(f'Skrev {out.relative_to(BASE_DIR)}')
+    print('Skrev fig2_savings.png (plots/ + overleaf)')
 
     # Print summary
     print('\n=== Total besparelse Norge (mrd NOK/år) ===')
