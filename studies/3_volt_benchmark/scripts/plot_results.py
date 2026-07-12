@@ -20,8 +20,8 @@ import powergama
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent.parent
 SOURCE_DATA = BASE_DIR / 'scenarios' / 'nuclear_MD' / 'data'
-RESULTS_DIR = BASE_DIR / 'studies' / '4_volt_benchmark_2040' / 'results'
-PLOTS_DIR = BASE_DIR / 'studies' / '4_volt_benchmark_2040' / 'plots'
+RESULTS_DIR = BASE_DIR / 'studies' / '3_volt_benchmark' / 'results'
+PLOTS_DIR = BASE_DIR / 'studies' / '3_volt_benchmark' / 'plots'
 
 DATE_START = pd.Timestamp('1991-01-01 00:00:00', tz='UTC')
 DATE_END = pd.Timestamp('2020-12-31 23:00:00', tz='UTC')

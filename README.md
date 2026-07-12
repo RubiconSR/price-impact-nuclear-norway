@@ -16,10 +16,10 @@ on the Nordic power system with 30 years of historical weather data
 ```
 .
 ├── studies/                        # Four thematic studies
-│   ├── 1_calibration/              # R0–R6 baseline calibration vs 2024 prices
-│   ├── 2_uniform_smr_2050/         # Paper main: BL/SMR1/3/6 × MD/IC
-│   ├── 3_ntc_border_2050/          # Paper extension: SMRs at cable endpoints
-│   └── 4_volt_benchmark_2040/      # Master: Volt benchmark + OW vs SMR
+│   ├── 0_calibration/              # R0–R6 baseline calibration vs 2024 prices
+│   ├── 1_paper_uniform_smr/         # Paper main: BL/SMR1/3/6 × MD/IC
+│   ├── 2_ntc_border/          # Paper extension: SMRs at cable endpoints
+│   └── 3_volt_benchmark/      # Master: Volt benchmark + OW vs SMR
 │
 ├── scenarios/                      # Input data + results (SQLite gitignored)
 │   ├── baseline/data/              # Calibration inputs
@@ -29,7 +29,6 @@ on the Nordic power system with 30 years of historical weather data
 ├── IEEE/                           # Paper LaTeX + figures
 ├── SMR_NTC_v2_results/             # Plots from Study 3
 ├── README.md                       # This file
-├── CLAUDE.md                       # Project notes
 └── .gitignore                      # Excludes SQLite, venv, large profiles
 ```
 
@@ -54,10 +53,10 @@ BASE_DIR = pathlib.Path(__file__).parent.parent.parent
 
 So invoke scripts from anywhere:
 ```bash
-python studies/1_calibration/run_baseline.py
-python studies/2_uniform_smr_2050/run_nuclear_MD.py
-python studies/3_ntc_border_2050/run_nuclear_NTC.py
-python studies/4_volt_benchmark_2040/scripts/run_volt_benchmark.py N0 OW1
+python studies/0_calibration/run_baseline.py
+python studies/1_paper_uniform_smr/run_nuclear_MD.py
+python studies/2_ntc_border/run_nuclear_NTC.py
+python studies/3_volt_benchmark/scripts/run_volt_benchmark.py N0 OW1
 ```
 
 ## Requirements

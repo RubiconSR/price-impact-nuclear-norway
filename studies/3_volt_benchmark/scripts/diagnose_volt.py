@@ -15,7 +15,7 @@ import sqlite3
 import pandas as pd
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent.parent
-RESULTS_DIR = BASE_DIR / 'studies' / '4_volt_benchmark_2040' / 'results'
+RESULTS_DIR = BASE_DIR / 'studies' / '3_volt_benchmark' / 'results'
 SOURCE_DATA = BASE_DIR / 'scenarios' / 'nuclear_MD' / 'data' / 'system'
 
 SCENARIOS = ['N0_OW0', 'N0_OW1', 'N0_OW2', 'N1_OW0', 'N1jevnt_OW0']

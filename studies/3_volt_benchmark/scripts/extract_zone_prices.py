@@ -17,7 +17,7 @@ from powergama.database import Database
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent.parent
 SOURCE_DATA = BASE_DIR / 'scenarios' / 'nuclear_MD' / 'data'
-RESULTS_DIR = BASE_DIR / 'studies' / '4_volt_benchmark_2040' / 'results'
+RESULTS_DIR = BASE_DIR / 'studies' / '3_volt_benchmark' / 'results'
 
 # NordicNuclearAnalysis-funksjon
 sys.path.insert(0, str(BASE_DIR / 'NordicNuclearAnalysis NY'))
