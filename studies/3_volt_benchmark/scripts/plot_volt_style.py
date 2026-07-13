@@ -101,22 +101,24 @@ def fig1():
         if abs(a) >= 0.8:
             ax.text(i, a / 2, fmt(a), ha='center', va='center', color='white',
                     fontsize=12, fontweight='bold', zorder=4)
-        off = -0.5 if b < 0 else 0.5
+        off = -1.0 if b < 0 else 1.0
         ax.text(i, b + off, fmt(b), ha='center', va='top' if b < 0 else 'bottom',
-                color='#333333', fontsize=12, zorder=4)
+                color='#222222', fontsize=11, zorder=7,
+                bbox=dict(boxstyle='round,pad=0.12', fc='white', ec='none', alpha=0.9))
         ax.plot([i - w / 2, i + w / 2], [VOLT_PRICE_OERE['S1'][z]] * 2,
                 color=REF1, lw=2.4, solid_capstyle='butt', zorder=6)
         ax.plot([i - w / 2, i + w / 2], [VOLT_PRICE_OERE['S2'][z]] * 2,
                 color=REF2, lw=2.4, ls=(0, (2, 1.2)), solid_capstyle='butt', zorder=6)
     clean_axes(ax)
     ax.set_xlim(-0.6, len(ZONES) - 0.4)
-    ax.set_ylim(min(min(s1), min(s2), min(VOLT_PRICE_OERE['S2'].values())) - 3,
-                max(max(s1), max(s2), 0) + 3)
+    ax.set_ylim(min(min(s1), min(s2), min(VOLT_PRICE_OERE['S2'].values())) - 4,
+                max(max(s1), max(s2), 0) + 4)
     ax.set_ylabel('Price change vs Scenario 0 [øre/kWh]', fontsize=12)
     ax.set_title('Change in zonal power price, Case 3 (PowerGAMA vs Volt)',
                  fontsize=13, fontweight='bold', pad=10)
     ax.legend(handles=legend_handles('$\\rightarrow$ S2 (+2 GW OW)'),
-              loc='lower left', fontsize=10, frameon=False, ncol=2)
+              loc='upper center', bbox_to_anchor=(0.5, -0.13), fontsize=10,
+              frameon=False, ncol=2)
     save_fig(fig, 'fig1_prices')
     plt.close(fig)
     print('wrote volt_compare_prices  S1', [round(v, 1) for v in s1],
@@ -138,10 +140,11 @@ def fig2():
         if abs(a) > 0.15:
             ax.text(i, a / 2, f'{a:.1f}', ha='center', va='center', color='white',
                     fontsize=11, fontweight='bold', zorder=4)
-        off = 0.22 if b >= 0 else -0.22
+        off = 0.42 if b >= 0 else -0.42
         ax.text(i, b + off, f'{b:.1f}', ha='center', va='bottom' if b >= 0 else 'top',
-                color='#333333', fontsize=12,
-                fontweight='bold' if b < 0 else 'normal', zorder=4)
+                color='#222222', fontsize=11,
+                fontweight='bold' if b < 0 else 'normal', zorder=7,
+                bbox=dict(boxstyle='round,pad=0.12', fc='white', ec='none', alpha=0.9))
         ax.plot([i - w / 2, i + w / 2], [VOLT_SAVE_BNOK['S1'][z]] * 2,
                 color=REF1, lw=2.4, solid_capstyle='butt', zorder=6)
         ax.plot([i - w / 2, i + w / 2], [VOLT_SAVE_BNOK['S2'][z]] * 2,
@@ -163,7 +166,8 @@ def fig2():
     ax.text(len(ZONES) - 0.5, yb, 'demand\n2040 (TWh)', ha='left', va='center',
             fontsize=8.5, color='#555555')
     ax.legend(handles=legend_handles('$\\rightarrow$ S2 (+2 GW OW)'),
-              loc='upper right', fontsize=10, frameon=False, ncol=1)
+              loc='upper center', bbox_to_anchor=(0.5, -0.13), fontsize=10,
+              frameon=False, ncol=2)
     tot1, tot2 = sum(s1), sum(s2)
     save_fig(fig, 'fig2_savings')
     plt.close(fig)
