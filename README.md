@@ -15,11 +15,13 @@ on the Nordic power system with 30 years of historical weather data
 
 ```
 .
-├── studies/                        # Four thematic studies
+├── studies/                        # Thematic studies (per case + calibration/robustness)
 │   ├── 0_calibration/              # R0–R6 baseline calibration vs 2024 prices
-│   ├── 1_paper_uniform_smr/         # Paper main: BL/SMR1/3/6 × MD/IC
-│   ├── 2_ntc_border/          # Paper extension: SMRs at cable endpoints
-│   └── 3_volt_benchmark/      # Master: Volt benchmark + OW vs SMR
+│   ├── 1_paper_uniform_smr/        # Case 1: BL/SMR1/3/6 × MD/IC
+│   ├── 2_ntc_border/               # Case 2: SMRs at cable-endpoint nodes
+│   ├── 3_volt_benchmark/           # Case 3: Volt benchmark + OW vs SMR
+│   ├── 5_sensitivity_no1_ntc/      # NO1 transmission-capacity sensitivity
+│   └── 6_robustness/               # Hydrological robustness + figure scripts
 │
 ├── scenarios/                      # Input data + results (SQLite gitignored)
 │   ├── baseline/data/              # Calibration inputs
