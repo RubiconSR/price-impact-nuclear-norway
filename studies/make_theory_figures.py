@@ -11,6 +11,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as pe
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
@@ -40,7 +41,12 @@ def merit_order():
     for lab, w, mc, col in blocks:
         ax.bar(x + w / 2, mc, width=w, color=col, edgecolor="white",
                align="center", zorder=2)
-        ax.text(x + w / 2, mc + 2.5, lab, ha="center", va="bottom", fontsize=9.5, rotation=0)
+        # technology label placed inside the block, reading upward from the
+        # baseline; black text with a white halo keeps it legible over both
+        # the coloured bar and the white background above short bars.
+        ax.text(x + w / 2, 2.0, lab, ha="center", va="bottom", fontsize=9.5,
+                rotation=90, color="black", zorder=5,
+                path_effects=[pe.withStroke(linewidth=2.6, foreground="white")])
         x += w
     demand = 26.0
     clearing = 15  # marginal block (reservoir hydro) at this demand
@@ -87,27 +93,31 @@ def water_value_dispatch():
 
 # ----------------------------------------------------------- 3. market timeline
 def market_timeline():
-    fig, ax = plt.subplots(figsize=(8.6, 3.0))
+    fig, ax = plt.subplots(figsize=(9.0, 3.3))
     ax.axhline(0, color="black", lw=1.2)
     # (start, end, label, colour)
     segs = [
-        (0.5, 4.2, "Day-ahead market\n(closes 12:00, day D$-$1)", "#1f5fa8"),
-        (4.2, 7.8, "Intraday market\n(continuous, up to $\\sim$1 h before)", "#2c8a3d"),
-        (7.8, 10.2, "Balancing / real time\n(TSO activation)", "#e8552d"),
+        (0.5, 4.2, "Day-ahead market\n(hourly auction)", "#1f5fa8"),
+        (4.2, 7.8, "Intraday market\n(continuous trading)", "#2c8a3d"),
+        (7.8, 10.2, "Balancing /\nreal-time\n(TSO activation)", "#e8552d"),
     ]
     for s, e, lab, col in segs:
-        ax.add_patch(FancyBboxPatch((s, 0.15), e - s - 0.12, 0.7,
+        # inset the box within its segment so the label has clear padding
+        # between the text and the rounded box edge (esp. the intraday box)
+        ax.add_patch(FancyBboxPatch((s + 0.08, 0.14), e - s - 0.28, 0.72,
                      boxstyle="round,pad=0.02,rounding_size=0.08",
                      facecolor=col, edgecolor="none", alpha=0.85))
-        ax.text((s + e) / 2, 0.5, lab, ha="center", va="center", color="white", fontsize=9.2)
-    for xt, lab in [(4.2, "gate\nclosure"), (10.0, "operating\nhour")]:
+        ax.text((s + e) / 2, 0.5, lab, ha="center", va="center", color="white", fontsize=8.6)
+    for xt, lab in [(4.2, "day-ahead gate\nclosure (12:00 D$-$1)"),
+                    (7.8, "intraday gate\nclosure ($\\sim$1 h before)"),
+                    (10.2, "operating\nhour")]:
         ax.plot([xt, xt], [-0.12, 0.0], color="black", lw=1)
-        ax.text(xt, -0.2, lab, ha="center", va="top", fontsize=8.5)
-    ax.annotate("", xy=(10.6, 0), xytext=(0.2, 0),
+        ax.text(xt, -0.2, lab, ha="center", va="top", fontsize=8.2)
+    ax.annotate("", xy=(10.9, 0), xytext=(0.2, 0),
                 arrowprops=dict(arrowstyle="-|>", color="black", lw=1.2))
-    ax.text(10.6, 0.08, "time", fontsize=9)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(-0.5, 1.0)
+    ax.text(10.9, 0.08, "time", fontsize=9)
+    ax.set_xlim(0, 11.3)
+    ax.set_ylim(-0.62, 1.0)
     ax.axis("off")
     ax.set_title("Temporal segmentation of the Nordic power market", fontsize=12)
     save(fig, "market_timeline")
