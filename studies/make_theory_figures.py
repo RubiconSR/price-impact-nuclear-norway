@@ -198,10 +198,120 @@ def bidding_zones():
     save(fig, "no_bidding_zones")
 
 
+def _assert_pipeline_layout(fig, ax, text_owner, box_geoms):
+    """Programmatic proof that the pipeline diagram is collision-free.
+
+    text_owner: list of (text artist, owning box key).
+    box_geoms:  dict box key -> (x0, x1, y0, y1) in data coordinates.
+    Asserts (i) no pair of text artists overlaps and (ii) no text artist
+    overlaps a box other than the one it belongs to."""
+    fig.canvas.draw()
+    rend = fig.canvas.get_renderer()
+    EPS = 0.5  # px; a shared edge is not an overlap
+    from matplotlib.transforms import Bbox
+
+    def boxes_overlap(a, b):
+        ix = min(a.x1, b.x1) - max(a.x0, b.x0)
+        iy = min(a.y1, b.y1) - max(a.y0, b.y0)
+        return ix > EPS and iy > EPS
+
+    texts = [(t, key, t.get_window_extent(rend)) for t, key in text_owner]
+
+    # (i) pairwise text overlap
+    for i in range(len(texts)):
+        for j in range(i + 1, len(texts)):
+            (ta, _, ba), (tb, _, bb) = texts[i], texts[j]
+            assert not boxes_overlap(ba, bb), \
+                f"text overlap: '{ta.get_text()}' <-> '{tb.get_text()}'"
+
+    # (ii) text over a foreign box
+    box_boxes = {}
+    for key, (x0, x1, y0, y1) in box_geoms.items():
+        (dx0, dy0) = ax.transData.transform((x0, y0))
+        (dx1, dy1) = ax.transData.transform((x1, y1))
+        box_boxes[key] = Bbox([[min(dx0, dx1), min(dy0, dy1)],
+                               [max(dx0, dx1), max(dy0, dy1)]])
+    for t, owner, tbox in texts:
+        for key, bbox in box_boxes.items():
+            if key == owner:
+                continue
+            assert not boxes_overlap(tbox, bbox), \
+                f"text '{t.get_text()}' overlaps foreign box '{key}'"
+    print("  methodology_pipeline: overlap check passed "
+          f"({len(texts)} text elements, {len(box_boxes)} boxes)")
+
+
+# ----------------------------------------------- 5. methodology pipeline (Ch. 5)
+def methodology_pipeline():
+    """Sober horizontal flow diagram of the analysis chain, wrapped into two
+    rows (boustrophedon) so the seven stages stay legible at text width. No
+    result values appear in the figure; the [2]/[6] citations live in the
+    LaTeX caption, not in the boxes."""
+    # (title, detail); detail "" -> title centred alone
+    stages = [
+        ("Input data", "By & Skavlem grid;\nNVE demand\nprojection"),
+        ("System\nconfiguration", "2050 / 2040 build"),
+        ("Scenario\nconstruction", "BL, SMR1/3/6 $\\times$\nMD/IC; SMR$_{\\mathrm{NTC}}$;\nVolt set"),
+        ("PowerGAMA", "sequential DC-OPF;\n30 weather years\n1991–2020 (GLPK)"),
+        ("SQLite result\ndatabases", ""),
+        ("Metrics", "Eqs. 5.4–5.8"),
+        ("Results", "Chapter 8"),
+    ]
+    # box 1..4 on the top row (left->right), 5..7 on the bottom row
+    # (right->left), with box 5 directly under box 4.
+    top_y, bot_y = 1.5, -1.5
+    xs = [0.0, 2.2, 4.4, 6.6]
+    centres = [(xs[0], top_y), (xs[1], top_y), (xs[2], top_y), (xs[3], top_y),
+               (xs[3], bot_y), (xs[2], bot_y), (xs[1], bot_y)]
+    BW, BH = 1.92, 1.72
+    CORE = 3  # index of the PowerGAMA compute box (slightly darker)
+
+    fig, ax = plt.subplots(figsize=(9.4, 5.0))
+    text_owner, box_geoms = [], {}
+    for i, ((cx, cy), (title, detail)) in enumerate(zip(centres, stages)):
+        key = f"b{i}"
+        face = "#dcdcdc" if i == CORE else "#f0f0f0"
+        ax.add_patch(FancyBboxPatch((cx - BW / 2, cy - BH / 2), BW, BH,
+                     boxstyle="round,pad=0.02,rounding_size=0.12",
+                     facecolor=face, edgecolor="#333333", linewidth=1.3, zorder=2))
+        box_geoms[key] = (cx - BW / 2, cx + BW / 2, cy - BH / 2, cy + BH / 2)
+        if detail:
+            ty, dy = cy + 0.44, cy - 0.34
+            t = ax.text(cx, ty, title, ha="center", va="center", zorder=4,
+                        fontsize=9.4, fontweight="bold", color="black")
+            d = ax.text(cx, dy, detail, ha="center", va="center", zorder=4,
+                        fontsize=7.9, color="#333333")
+            text_owner += [(t, key), (d, key)]
+        else:
+            t = ax.text(cx, cy, title, ha="center", va="center", zorder=4,
+                        fontsize=9.4, fontweight="bold", color="black")
+            text_owner.append((t, key))
+
+    def arrow(p0, p1):
+        ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-|>", mutation_scale=16,
+                     color="#333333", lw=1.5, shrinkA=0, shrinkB=0, zorder=1))
+
+    half = BW / 2
+    for a, b in [(0, 1), (1, 2), (2, 3)]:  # top row, rightward
+        arrow((centres[a][0] + half, top_y), (centres[b][0] - half, top_y))
+    arrow((xs[3], top_y - BH / 2), (xs[3], bot_y + BH / 2))  # drop down
+    for a, b in [(4, 5), (5, 6)]:  # bottom row, leftward
+        arrow((centres[a][0] - half, bot_y), (centres[b][0] + half, bot_y))
+
+    ax.set_xlim(-1.25, 7.85)
+    ax.set_ylim(-2.75, 2.75)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.set_title("Analysis pipeline of the thesis", fontsize=12)
+    _assert_pipeline_layout(fig, ax, text_owner, box_geoms)
+    save(fig, "methodology_pipeline")
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     merit_order()
     water_value_dispatch()
     market_timeline()
     bidding_zones()
+    methodology_pipeline()
     print("done ->", OUT)
