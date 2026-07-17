@@ -26,41 +26,92 @@ def save(fig, name):
     print("  wrote", name)
 
 
+def _assert_no_overlap(fig, ax, label_bar_pairs, bar_geoms):
+    """Programmatic proof that the merit-order labelling is collision-free.
+
+    Renders the figure and, via each artist's window extent (display px),
+    asserts (i) no pair of text labels overlaps and (ii) no label sits over a
+    bar that is not its own. Bar rectangles are taken from their known data
+    coordinates transformed to display space, which is exact regardless of the
+    patch draw order."""
+    fig.canvas.draw()
+    rend = fig.canvas.get_renderer()
+    EPS = 0.5  # px; a shared edge is not an overlap
+
+    def boxes_overlap(a, b):
+        ix = min(a.x1, b.x1) - max(a.x0, b.x0)
+        iy = min(a.y1, b.y1) - max(a.y0, b.y0)
+        return ix > EPS and iy > EPS
+
+    from matplotlib.transforms import Bbox
+    labels = [(lab, t, t.get_window_extent(rend)) for lab, t, _ in label_bar_pairs]
+
+    # (i) pairwise overlap over *all* text artists in the axes
+    all_texts = [(t.get_text(), t.get_window_extent(rend)) for t in ax.texts]
+    for i in range(len(all_texts)):
+        for j in range(i + 1, len(all_texts)):
+            (la, ba), (lb, bb) = all_texts[i], all_texts[j]
+            assert not boxes_overlap(ba, bb), \
+                f"text overlap: '{la}' <-> '{lb}'"
+
+    # (ii) label over a foreign bar
+    bar_boxes = {}
+    for lab, (x0, x1, y0, y1) in bar_geoms.items():
+        (dx0, dy0) = ax.transData.transform((x0, y0))
+        (dx1, dy1) = ax.transData.transform((x1, y1))
+        bar_boxes[lab] = Bbox([[min(dx0, dx1), min(dy0, dy1)],
+                               [max(dx0, dx1), max(dy0, dy1)]])
+    for lab, _, tbox in labels:
+        for blab, bbox in bar_boxes.items():
+            if blab == lab:
+                continue
+            assert not boxes_overlap(tbox, bbox), \
+                f"label '{lab}' overlaps foreign bar '{blab}'"
+    print("  merit_order: overlap check passed "
+          f"({len(labels)} labels, {len(bar_boxes)} bars)")
+
+
 # ---------------------------------------------------------------- 1. merit order
 def merit_order():
-    # (label, width=capacity GW, marginal cost EUR/MWh, colour) -- illustrative
+    # (label, width=capacity GW, marginal cost EUR/MWh, colour) -- illustrative.
+    # Each bar is made wide enough for its own label so the horizontal,
+    # bar-top label always fits within its own column and never spills over a
+    # (taller) neighbouring bar to its right. Enforced by _assert_no_overlap.
     blocks = [
         ("Wind & solar", 12, 0, "#7fd08a"),
-        ("Nuclear (SMR)", 6, 9, "#e8552d"),
+        ("Nuclear (SMR)", 9, 9, "#e8552d"),
         ("Reservoir hydro", 14, 15, "#1f5fa8"),
-        ("Imports", 6, 45, "#9467bd"),
+        ("Imports", 7, 45, "#9467bd"),
         ("Gas", 6, 90, "#7f7f7f"),
     ]
     fig, ax = plt.subplots(figsize=(7.6, 4.6))
+    label_bar_pairs = []  # (label, text artist, bar patch)
+    bar_geoms = {}        # label -> (x0, x1, y0, y1) in data coords
     x = 0
     for lab, w, mc, col in blocks:
-        ax.bar(x + w / 2, mc, width=w, color=col, edgecolor="white",
-               align="center", zorder=2)
+        cont = ax.bar(x + w / 2, mc, width=w, color=col, edgecolor="white",
+                      align="center", zorder=2)
         # technology label placed above the top of each block, read
         # horizontally; the white halo keeps it legible over the axes.
-        ax.text(x + w / 2, mc + 2.5, lab, ha="center", va="bottom", fontsize=9.5,
-                color="black", zorder=5,
-                path_effects=[pe.withStroke(linewidth=2.6, foreground="white")])
+        # "Wind & solar" (mc=0) therefore sits just above the baseline.
+        t = ax.text(x + w / 2, mc + 2.5, lab, ha="center", va="bottom",
+                    fontsize=9.5, color="black", zorder=5,
+                    path_effects=[pe.withStroke(linewidth=2.6, foreground="white")])
+        label_bar_pairs.append((lab, t, cont.patches[0]))
+        bar_geoms[lab] = (x, x + w, 0, mc)
         x += w
-    demand = 26.0
+    demand = 28.0
     clearing = 15  # marginal block (reservoir hydro) at this demand
     ax.axvline(demand, color="black", ls="--", lw=1.4, zorder=3)
     ax.text(demand + 0.4, 105, "Demand", rotation=90, va="top", fontsize=10)
     ax.axhline(clearing, xmin=0, xmax=demand / x, color="#b30000", ls=":", lw=1.6, zorder=3)
-    ax.annotate("Clearing price", xy=(0.5, clearing), xytext=(1, 55),
-                fontsize=10, color="#b30000",
-                arrowprops=dict(arrowstyle="->", color="#b30000"))
     ax.set_xlabel("Cumulative available capacity [GW]")
     ax.set_ylabel("Marginal cost [EUR/MWh]")
     ax.set_title("Merit-order dispatch and market clearing (illustrative)")
     ax.set_xlim(0, x)
     ax.set_ylim(0, 115)
     ax.spines[["top", "right"]].set_visible(False)
+    _assert_no_overlap(fig, ax, label_bar_pairs, bar_geoms)
     save(fig, "merit_order")
 
 
