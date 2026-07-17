@@ -265,7 +265,7 @@ def fig_timeseries():
 # ----------------------------------------------------------------------
 def fig_reservoir():
     targets = [('MD', 'BL_MD', 'Baseline'), ('MD', 'SMR6_MD', '9.0 GW SMR')]
-    plt.figure(figsize=(13, 4.5))
+    plt.figure(figsize=(13, 6.5))
     ok = False
     for g, name, lbl in targets:
         cfg = STUDIES[g]

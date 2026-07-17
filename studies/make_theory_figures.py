@@ -41,11 +41,10 @@ def merit_order():
     for lab, w, mc, col in blocks:
         ax.bar(x + w / 2, mc, width=w, color=col, edgecolor="white",
                align="center", zorder=2)
-        # technology label placed inside the block, reading upward from the
-        # baseline; black text with a white halo keeps it legible over both
-        # the coloured bar and the white background above short bars.
-        ax.text(x + w / 2, 2.0, lab, ha="center", va="bottom", fontsize=9.5,
-                rotation=90, color="black", zorder=5,
+        # technology label placed above the top of each block, read
+        # horizontally; the white halo keeps it legible over the axes.
+        ax.text(x + w / 2, mc + 2.5, lab, ha="center", va="bottom", fontsize=9.5,
+                color="black", zorder=5,
                 path_effects=[pe.withStroke(linewidth=2.6, foreground="white")])
         x += w
     demand = 26.0
@@ -56,8 +55,6 @@ def merit_order():
     ax.annotate("Clearing price", xy=(0.5, clearing), xytext=(1, 55),
                 fontsize=10, color="#b30000",
                 arrowprops=dict(arrowstyle="->", color="#b30000"))
-    ax.annotate("marginal unit", xy=(demand - 3, clearing), xytext=(demand - 12, 30),
-                fontsize=9.5, arrowprops=dict(arrowstyle="->", color="0.3"))
     ax.set_xlabel("Cumulative available capacity [GW]")
     ax.set_ylabel("Marginal cost [EUR/MWh]")
     ax.set_title("Merit-order dispatch and market clearing (illustrative)")
