@@ -20,8 +20,8 @@ on the Nordic power system with 30 years of historical weather data
 │   ├── 1_paper_uniform_smr/        # Case 1: BL/SMR1/3/6 × MD/IC
 │   ├── 2_ntc_border/               # Case 2: SMRs at cable-endpoint nodes
 │   ├── 3_volt_benchmark/           # Case 3: Volt benchmark + OW vs SMR
-│   ├── 5_sensitivity_no1_ntc/      # NO1 transmission-capacity sensitivity
-│   └── 6_robustness/               # Hydrological robustness + figure scripts
+│   ├── 4_sensitivity_no1_ntc/      # NO1 transmission-capacity sensitivity
+│   └── 5_robustness/               # Hydrological robustness + figure scripts
 │
 ├── scenarios/                      # Input data + results (SQLite gitignored)
 │   ├── baseline/data/              # Calibration inputs
@@ -29,7 +29,6 @@ on the Nordic power system with 30 years of historical weather data
 │   └── nuclear_IC/data/            # 2050 Increased Consumption inputs
 │
 ├── IEEE/                           # Paper LaTeX + figures
-├── SMR_NTC_v2_results/             # Plots from Study 3
 ├── README.md                       # This file
 └── .gitignore                      # Excludes SQLite, venv, large profiles
 ```

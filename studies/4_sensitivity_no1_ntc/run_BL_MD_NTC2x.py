@@ -4,7 +4,7 @@ Identical setup to run_nuclear_MD.py BL_MD case, with one modification:
 the 5 AC branches connecting NO1 to NO2 have their capacity doubled
 (total 2390 → 4780 MW). All other data is unchanged.
 
-Output: studies/5_sensitivity_no1_ntc/results/powergama_BL_MD_NTC2x.sqlite
+Output: studies/4_sensitivity_no1_ntc/results/powergama_BL_MD_NTC2x.sqlite
 """
 
 import sys
@@ -23,7 +23,7 @@ DATE_END = pd.Timestamp(f'{SIM_YEAR_END}-12-31 23:00:00', tz='UTC')
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent
 DATA_PATH = BASE_DIR / 'scenarios' / 'nuclear_MD' / 'data'
-RESULTS_DIR = BASE_DIR / 'studies' / '5_sensitivity_no1_ntc' / 'results'
+RESULTS_DIR = BASE_DIR / 'studies' / '4_sensitivity_no1_ntc' / 'results'
 SQL_FILE = RESULTS_DIR / f'powergama_{SCENARIO_NAME}.sqlite'
 
 SOLVER = 'glpk'
@@ -123,7 +123,7 @@ def main():
     run_simulation(data)
 
     print('\nDone. Run extraction:')
-    print(f'  python studies/5_sensitivity_no1_ntc/compare_no1.py')
+    print(f'  python studies/4_sensitivity_no1_ntc/compare_no1.py')
 
 
 if __name__ == '__main__':

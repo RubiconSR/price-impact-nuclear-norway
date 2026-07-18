@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 ROOT = "/Users/siva/Downloads/MT/Nuclear Power Norway Price"
 FIG  = os.path.join(ROOT, "overleaf/pictures/results")
-OUT  = os.path.join(ROOT, "studies/6_robustness/out")
+OUT  = os.path.join(ROOT, "studies/5_robustness/out")
 
 # NO DC interconnectors: Res_DcBranches.indx -> (name, cap MW, NO_is_from)
 DC = [

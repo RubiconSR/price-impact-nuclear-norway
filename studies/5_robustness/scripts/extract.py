@@ -15,7 +15,7 @@ import sqlite3, json, os, sys
 import numpy as np
 
 ROOT = "/Users/siva/Downloads/MT/Nuclear Power Norway Price"
-OUT  = os.path.join(ROOT, "studies/6_robustness/out")
+OUT  = os.path.join(ROOT, "studies/5_robustness/out")
 
 SCEN = {
     "BL_MD":      "scenarios/nuclear_MD/BL_MD/results/powergama_BL_MD.sqlite",

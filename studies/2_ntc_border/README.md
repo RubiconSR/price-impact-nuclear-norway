@@ -40,9 +40,9 @@ Two demand levels: MD (208 TWh) and IC (230 TWh). System base same as Study 2.
 | **IC net export** | -15.9 TWh | +35.6 TWh | +51.5 |
 
 Cable saturation dramatically increases — most interconnectors hit >85% utilisation
-under SMR_NTC. See `../../SMR_NTC_v2_results/RESULTS_REPORT.txt` for full details.
+under SMR_NTC. See `results/RESULTS_REPORT.txt` for full details.
 
-Plots are in `../../SMR_NTC_v2_results/` and individual scenario subfolders.
+Plots are in `results/` and individual scenario subfolders.
 
 ## Comparison with Study 2 (uniform distribution)
 

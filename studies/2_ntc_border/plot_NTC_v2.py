@@ -38,7 +38,7 @@ from functions.database_functions import (
 # Configuration
 # ============================================================
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent
-OUT_DIR = BASE_DIR / 'SMR_NTC_v2_results'
+OUT_DIR = BASE_DIR / 'studies' / '2_ntc_border' / 'results'
 OUT_DIR.mkdir(exist_ok=True)
 
 SIM_YEAR_START = 1991

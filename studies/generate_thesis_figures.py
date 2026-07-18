@@ -9,7 +9,7 @@ Produces, per study group:
 
 Zone prices are volume-weighted (Hjelmeland Eq. 5) via the
 NordicNuclearAnalysis getZonePricesVolumeWeightedFromDB function and are
-cached to thesis/figures/_zone_prices_cache.csv so re-runs are instant.
+cached to output/figures/_zone_prices_cache.csv so re-runs are instant.
 
 Usage:
     python studies/generate_thesis_figures.py            # everything
@@ -34,7 +34,7 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE / 'NordicNuclearAnalysis NY'))
 from functions.database_functions import getZonePricesVolumeWeightedFromDB
 
-OUT = BASE / 'thesis' / 'figures'
+OUT = BASE / 'output' / 'figures'
 OUT.mkdir(parents=True, exist_ok=True)
 CACHE = OUT / '_zone_prices_cache.csv'
 

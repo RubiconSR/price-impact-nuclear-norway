@@ -7,7 +7,7 @@ Same GLPK solver and same data as the main MD scenarios; the ONLY changes are
 (a) NO1<->NO2 doubled and (b) SMR generators added.
 
 Usage: python run_SMR_NTC2x.py SMR1_MD   (or SMR3_MD / SMR6_MD)
-Output: studies/5_sensitivity_no1_ntc/results/powergama_<scen>_NTC2x.sqlite
+Output: studies/4_sensitivity_no1_ntc/results/powergama_<scen>_NTC2x.sqlite
 """
 import sys, pathlib, time
 import pandas as pd
@@ -19,7 +19,7 @@ DATE_END = pd.Timestamp(f'{SIM_YEAR_END}-12-31 23:00:00', tz='UTC')
 
 BASE_DIR = pathlib.Path(__file__).parent.parent.parent
 DATA_PATH = BASE_DIR / 'scenarios' / 'nuclear_MD' / 'data'
-RESULTS_DIR = BASE_DIR / 'studies' / '5_sensitivity_no1_ntc' / 'results'
+RESULTS_DIR = BASE_DIR / 'studies' / '4_sensitivity_no1_ntc' / 'results'
 SOLVER = 'appsi_highs'
 LOSS_METHOD = 0
 

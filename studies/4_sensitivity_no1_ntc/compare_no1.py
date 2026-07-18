@@ -1,7 +1,5 @@
 """Compare BL_MD vs BL_MD_NTC2x — how much of NO1's price anomaly is NTC-driven?
 
-Reuses extraction methods from thesis/verify_no1.py, recompute_national_avg.py
-and diagnose_no1.py for consistency.
 """
 
 import sqlite3
@@ -13,7 +11,7 @@ import numpy as np
 BASE = pathlib.Path('/Users/siva/Downloads/MT/Nuclear Power Norway Price')
 
 ORIG_SQL = BASE / 'scenarios/nuclear_MD/BL_MD/results/powergama_BL_MD.sqlite'
-NEW_SQL = BASE / 'studies/5_sensitivity_no1_ntc/results/powergama_BL_MD_NTC2x.sqlite'
+NEW_SQL = BASE / 'studies/4_sensitivity_no1_ntc/results/powergama_BL_MD_NTC2x.sqlite'
 DATA_DIR = BASE / 'scenarios/nuclear_MD/data'
 
 ZONES = ['NO1', 'NO2', 'NO3', 'NO4', 'NO5']
@@ -178,7 +176,7 @@ def main():
                   'sat_99pct_share_orig', 'sat_99pct_share_2x', 'Δ_pp']].round(2).to_string(index=False))
 
     # Save
-    out = BASE / 'thesis' / 'no1_ntc_sensitivity_comparison.csv'
+    out = BASE / 'output' / 'figures' / 'no1_ntc_sensitivity_comparison.csv'
     summary_rows = []
     for z in ZONES:
         summary_rows.append({
